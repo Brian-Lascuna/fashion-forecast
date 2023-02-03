@@ -14,9 +14,7 @@ console.log(weatherCards);
 console.log(placeEL);
 
 
-if(!city){
-  document.location.replace('./index.html');
-} else {
+if(city){  
   fetch(geoURL + city + "&limit=5&" + APIkey)  // Search by city to get coordinates.
     .then(function (response) {
       return response.json();
