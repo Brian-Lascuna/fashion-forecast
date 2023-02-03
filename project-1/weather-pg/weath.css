@@ -1,0 +1,40 @@
+
+*{
+    box-sizing: border-box;
+   
+}
+
+*{
+    font-family: 'Poppins', sans-serif;
+    
+}
+/* body{
+    background-color: blueviolet;
+} */
+.search-bar {
+justify-content: center;
+text-align: center;
+font-size: 100%;
+ margin-top: 5%; 
+margin-left: 33%;
+margin-bottom: 5%;
+width: 500px;
+height: 50px;
+border: 1px solid;
+border-radius: 15px;
+}
+
+ /* .weather-cards{
+    margin-left: 20%;
+
+}  */
+
+.weather-card{
+box-shadow: 10px 15px lightgrey;
+}
+
+.weather-card:hover{
+ transform: scale(1.1);
+}
+
+
