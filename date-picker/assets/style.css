@@ -1,0 +1,38 @@
+
+* body {
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    background-color: #5f5f94;
+    color: black;
+    margin: 10px;
+    padding: 3px 5px;
+    box-sizing: border-box;
+}
+
+.page-title {
+    position: relative;
+    text-align: center;
+}
+
+.search-bar {
+    position: relative;
+    text-align: center;
+}
+
+.datepicker {
+    background-color: beige;
+    text-decoration-color: black;
+}
+
+.text {
+    background-color: beige;
+    text-align: center;
+    color: black;
+}
+
+p {
+    position: relative;
+    text-align: center;
+}
+
