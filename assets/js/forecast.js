@@ -147,6 +147,5 @@ $( document ).ready(() => {
 
   userLocation.on("focus", displayModal);
 
-
   generateMap();
 })
