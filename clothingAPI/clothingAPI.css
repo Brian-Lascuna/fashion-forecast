@@ -1,0 +1,14 @@
+.locationSearch {
+    margin-right: 30px;
+}
+
+.main-header {
+    position: relative;
+    left: 20px;
+    top: 40px;
+}
+
+header {
+    background-color: cadetblue;
+    border-bottom: 5px solid black;
+}
