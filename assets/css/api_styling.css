@@ -1,0 +1,41 @@
+.search-container {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.clothing-container {
+    height: 30vh;
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+}
+
+.card {
+    border: 5px solid black;
+
+}
+
+.card img {
+    background-size: cover;
+}
+
+.card-text {
+    font-weight: bolder;
+}
+
+form input {
+    width: 50vw;
+}
+
+#map {
+    height: 500px;
+    width: 100%;
+}
+
+body {
+    background-image: url(../../project-1/pexels-josh-sorenson-1478524.jpg);
+}
