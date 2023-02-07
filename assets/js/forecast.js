@@ -98,10 +98,10 @@ function getWeather(lon, lat){
         console.log(data);
          for(var i=0; i<weatherCards.length; i++){
           // weatherCards[i].children[1].children[0].attributes[0].nodeValue = iconURLprefix + data.daily[i].weather[0].icon + '@2x.png';
-          weatherCards[i].children[0].children[4].children[0].textContent = data.daily[i].temp.max;
-          weatherCards[i].children[0].children[4].children[2].textContent = data.daily[i].temp.min;
-          weatherCards[i].children[0].children[4].children[4].textContent = data.daily[i].weather[0].description;
-          weatherCards[i].children[0].children[1].textContent = dayjs.unix(data.daily[i].sunrise).format('MMM D, YYYY');
+          weatherCards[i].children[0].children[3].children[0].textContent = data.daily[i].temp.max;
+          weatherCards[i].children[0].children[3].children[2].textContent = data.daily[i].temp.min;
+          weatherCards[i].children[0].children[3].children[4].textContent = data.daily[i].weather[0].description;
+          weatherCards[i].children[0].children[1].textContent = dayjs.unix(data.daily[i].sunrise).format('M/D/YY');
          }
     });
 }
