@@ -8,7 +8,7 @@ body {
 }
 
 header {
-    padding: 8px 6% 10px 0;
+    padding: 8px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -41,14 +41,11 @@ nav a:hover {
     background-size: 100% 100%;
     color: var(--primary);
 }
-  
-nav a:last-child {
-    margin-right: 0;
-}
 
 .dropdown {
     display: inline-block;
     position: relative;
+    padding-left: 8px;
 }
 .dropdown-content {
     display: none;
@@ -63,8 +60,9 @@ nav a:last-child {
 .dropdown-content a {
     display: block;
     color: #000000;
-    padding: 5px;
+    padding: 2px;
     text-decoration: none;
+    font-size: x-small;
 }
 .dropdown-content a:hover {
     color: #FFFFFF;

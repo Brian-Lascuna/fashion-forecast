@@ -18,20 +18,17 @@
     
     <header>
       <nav>
-
+        <div class="dropdown">
+          <button>About us</button>
+          <div class="dropdown-content">
+            <a> Created by Brian Lascuna, Leslie Sanchez, Maryam Selassie, Kate Sundquist, and Michael Welle</a>
+          </div>
+        </div>
         <div class="dropdown">
           <button>Contact us</button>
-            <div class="dropdown-content">
-              <a href="https://blog.hubspot.com/">Email</a>
-              <a href="https://academy.hubspot.com/">Academy</a>
-              <a href="https://www.youtube.com/user/hubspot">YouTube</a>
-            </div>
-          <button>About us</button>
-            <div>
-              <a href="https://blog.hubspot.com/">Email</a>
-             <a href="https://academy.hubspot.com/">Academy</a>
-              <a href="https://www.youtube.com/user/hubspot">YouTube</a>
-           </div>
+          <div class="dropdown-content">
+            <a> Emails: ... </a>
+          </div>
         </div>
         
       </nav>
@@ -63,10 +60,13 @@
       </section>
 
       <section>
+        <div class="col-12">
+          <h3 class="text-5x1">Select a Date</h3>
+        </div>
         <!--INSERT DATEPICKER HERE-->
       </section>
 
-      <!--search button that should lead to the clothing/item suggestions-->
+      <!--search button that will lead to the clothing/item suggestions-->
       <div>
         <a>
          <button onclick="myFunction()" class="suggestionsBtn" id="suggestionsBtn">View Suggestions</button>
