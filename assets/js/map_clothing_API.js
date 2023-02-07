@@ -70,7 +70,7 @@ function parseLocation(result) {
     userLocation.val(result.place_name);
 }
 
-// API call the searches for clothing, currently hard-coded for jackets
+// API call the searches for clothing, currently hard-coded for jackets. Simple algorithm created
 function searchClothing() {
     const options = {
         method: 'GET',
@@ -84,6 +84,30 @@ function searchClothing() {
         .then(response => response.json())
         .then(response => {console.log(response); generateCards(response)})
         .catch(err => console.error(err));
+
+    if (forecast == "raining", "rain", "thunderstorming", "storming", "cold", "cloudy") {
+        return "https://amazon-price1.p.rapidapi.com/search?keywords=jacket&marketplace=US";
+    }
+}
+
+// API call the searches for clothing, currently hard-coded for shorts. Simple algorithm created 
+function searchClothing() {
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '41edf00b9dmsh42e34f55b81ea1cp149dc7jsn8b1d721e93e9',
+            'X-RapidAPI-Host': 'amazon-price1.p.rapidapi.com'
+        }
+    };
+
+    fetch('https://amazon-price1.p.rapidapi.com/search?keywords=shorts&marketplace=US', options)
+        .then(response => response.json())
+        .then(response => {console.log(response); generateCards(response)})
+        .catch(err => console.error(err));
+
+    if (forecast == "sunny", "sun", "clear", "warm", "partly cloudy") {
+        return "https://amazon-price1.p.rapidapi.com/search?keywords=shorts&marketplace=US";
+    }
 }
 
 // Generates the cards that are displayed on the webpage for each clothing result
