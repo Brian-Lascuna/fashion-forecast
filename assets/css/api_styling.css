@@ -16,7 +16,6 @@
 
 .card {
     border: 5px solid black;
-
 }
 
 .card img {
@@ -35,7 +34,6 @@ form input {
     height: 500px;
     width: 100%;
 }
-
 body {
     background-image: url(../../project-1/pexels-josh-sorenson-1478524.jpg);
 }
