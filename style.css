@@ -1,0 +1,54 @@
+body {
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif, 'Courier New', Courier, monospace; 
+    font-size: 140%;
+    background-color: rgb(231, 230, 230);
+}
+
+.banner {
+  background: rgb(68, 88, 120);
+  background-image: url("../images/clouds-background.avif");
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: soft-light;
+  min-height: 20vh;
+  color: var(--light);
+  padding: 2% 6%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  font-size: 160%;
+}
+
+.introduction {
+    margin: 80px auto 0 auto;
+    text-align: center;
+}
+
+button {
+    display: inline-block;
+    cursor: pointer;
+    background-color: rgb(69, 114, 187);
+    color: white;
+    font-size: 100%;
+}
+
+button:hover {
+    background-color: rgb(144, 178, 233);
+}
+
+.weather {
+    display: none;
+}
+
+.clothing {
+    display: none;
+}
+
+.accessories {
+    display: none;
+}
+
+.hide {
+    display: none;
+}
