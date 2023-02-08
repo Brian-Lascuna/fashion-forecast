@@ -15,7 +15,7 @@
   <title>Fashion Forecast</title>
 </head>
 
-<body class="min-w-[450px]">
+<body>
   <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.min.js"></script>
     <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v5.0.0/mapbox-gl-geocoder.css" type="text/css">
     <header>
@@ -35,6 +35,15 @@
             <input type="location" class="form-control-lg searchLocation" id="search-location" aria-describedby="localLocation" placeholder="Search Location...">
             <button type="submit" class="btn btn-primary rounded-3xl">Get Weather</button>
           </form>
+        </div>
+      </div>
+      <div class="row align-items-center text-center">
+        <div class="col-12" id="search-history-buttons">
+          <button type="button" class="btn btn-danger rounded-3xl search-history-button" data-num='0' style="visibility: hidden;"></button>
+          <button type="button" class="btn btn-danger rounded-3xl search-history-button" data-num='1' style="visibility: hidden;"></button>
+          <button type="button" class="btn btn-danger rounded-3xl search-history-button" data-num='2' style="visibility: hidden;"></button>
+          <button type="button" class="btn btn-danger rounded-3xl search-history-button" data-num='3' style="visibility: hidden;"></button>
+          <button type="button" class="btn btn-danger rounded-3xl search-history-button" data-num='4' style="visibility: hidden;"></button>  
         </div>
       </div>
     </div>
@@ -127,6 +136,7 @@
             </div>
           </div>
         </div>
+        </section>
       </div>
     </div>
   </section>
