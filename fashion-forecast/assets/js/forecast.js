@@ -1,18 +1,19 @@
-// var geoURL = 'http://api.openweathermap.org/geo/1.0/direct';
 var weatherURL = 'https://api.openweathermap.org/data/3.0/onecall?'
-// var city = window.location.search;
 var APIkey = 'appid=5a2b8d33311dc86fb5608e194db81f27';
 var lon;
 var lat;
 var searchLocation;
 var eventResult;
-const iconURLprefix = 'http://openweathermap.org/img/wn/';
-
 
 // Grab necessary elements
 var userLocation = $('#search-location');
 var mapModal = $('#mapModal');
-var clothingContainer = $('#clothing-container');
+var clothingContainer = $('.clothing-container');
+var clothingModal = new bootstrap.Modal('#clothingModal');
+var clothingModalEl = document.getElementById('clothingModal');
+var placeEL = $('#place');
+var weatherCards = $('.weather-card');
+var weatherContainer = $('#weather-container');
 
 
 // Options for getting user location
@@ -30,13 +31,12 @@ function displayModal() {
 // Display the map within the modal
 function generateMap() {
     mapboxgl.accessToken = 'pk.eyJ1IjoiYmxhc2N1bmEiLCJhIjoiY2xkanU2MXl1MHVuaDN3bm9oOGZqMzVsMSJ9.slPE4Rn2asrbxWKcDgBejA';
-    //navigator.geolocation.getCurrentPosition(success, error, options);
     const map = new mapboxgl.Map({
     container: 'map',
         // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
         style: 'mapbox://styles/mapbox/streets-v12',
-        center: [0,0],
-        zoom: 13
+        center: [-100,40],
+        zoom: 3
     });
  
     const geocoder = new MapboxGeocoder({
@@ -63,8 +63,8 @@ function generateMap() {
         geocoder.on('result', (event) => {
             console.log(event.result);
             eventResult = event.result;
-            searchLocation = event.result.place_name;
-            userLocation.val(searchLocation);
+            userLocation.val(event.result.place_name);
+            localStorage.setItem('lastFFSearch', JSON.stringify(eventResult));
         })
     });
 
@@ -77,16 +77,13 @@ function generateMap() {
 function parseLocation(result) {
     lon = result.center[0];
     lat = result.center[1];
-    placeEL.text("Weather for " + searchLocation);
+    placeEL.text("Weather for " + result.place_name);
+    weatherContainer.attr('class', 'row');
     getWeather(lon, lat);
 }
 
 
-var placeEL = $('#place');
-console.log(placeEL);
-var weatherCards = $('.weather-card');
-console.log(weatherCards);
-var weatherContainer = $('#weather-container');
+
 
 
 function getWeather(lon, lat){  
@@ -96,15 +93,60 @@ function getWeather(lon, lat){
       })
       .then(function (data) {
         console.log(data);
+        var weatherIcon;
+        var imageIcon;
+        var highDeg = $('.current-deg');
+        //gets data for each weather card (day) and displays it
          for(var i=0; i<weatherCards.length; i++){
-          // weatherCards[i].children[1].children[0].attributes[0].nodeValue = iconURLprefix + data.daily[i].weather[0].icon + '@2x.png';
-          weatherCards[i].children[0].children[3].children[0].textContent = data.daily[i].temp.max;
-          weatherCards[i].children[0].children[3].children[2].textContent = data.daily[i].temp.min;
-          weatherCards[i].children[0].children[3].children[4].textContent = data.daily[i].weather[0].description;
+          
+        switch(data.daily[i].weather[0].icon){
+              case '01d':
+              case '01n':
+                weatherIcon = 'fa-sun'; 
+                imageIcon = './assets/image/mountains-gcfcefc2c7_1280.png' ; break;
+              case '02d':
+              case '02n':
+                weatherIcon = 'fa-cloud-sun';
+                imageIcon = "./assets/image/mountains-gf72f61f9f_640.png"; break;
+              case '03d':
+              case '03n':
+              case '04d':
+              case '04n':
+                weatherIcon = 'fa-cloud'; 
+                imageIcon ='./assets/image/pexels-josh-sorenson-1478524.jpg'; break;
+              case '09d':
+              case '09n':
+                weatherIcon = 'fa-cloud-rain';
+                imageIcon ='./assets/image/landscape-gb1b904a1a_1920.jpg'; break;
+              case '10d':
+              case '10n':
+                weatherIcon = 'fa-cloud-showers-heavy'; 
+                imageIcon = './assets/image/landscape-gb1b904a1a_1920.jpg'; break;
+              case '11d':
+              case '11n':
+                weatherIcon = 'fa-cloud-bolt'; 
+                imageIcon = './assets/image/landscape-gb1b904a1a_1920.jpg'; break;
+              case '13d':
+              case '13n':
+                weatherIcon = 'fa-snowflake';
+                imageIcon = './assets/image/landscape-gb1b904a1a_1920.jpg'; break;
+              case '50d':
+              case '50n':
+                weatherIcon = 'fa-smog';
+                imageIcon = './assets/image/pinal-jain-x-XwnC7FgFM-unsplash.jpg'; break;
+            }
+            
+           weatherCards[i].children[0].children[0].setAttribute('src', imageIcon);
+          weatherCards[i].children[0].children[2].setAttribute('class', 'absolute top-1 right-1 text-8xl sm:text-8xl md:text-7xl lg:text-6xl xl:text-5xl 2xl:text-3xl text-black fas ' + weatherIcon);
+         highDeg[i].textContent = data.daily[i].temp.max;
+          weatherCards[i].children[0].children[4].children[0].textContent = data.daily[i].temp.max;
+          weatherCards[i].children[0].children[4].children[2].textContent = data.daily[i].temp.min;
+          weatherCards[i].children[0].children[4].children[4].textContent = data.daily[i].weather[0].description;
+          weatherCards[i].children[0].children[4].children[4].setAttribute('data-weatherID', data.daily[i].weather[0].id);
           weatherCards[i].children[0].children[1].textContent = dayjs.unix(data.daily[i].sunrise).format('M/D/YY');
          }
-    });
-}
+      });
+};
 
 var cityFormEl = document.querySelector('#city-search');
 var cityInputEl = document.querySelector('#search-location');
@@ -112,40 +154,139 @@ var cityInputEl = document.querySelector('#search-location');
 var formSubmitHandler = function (event) {
   event.preventDefault();
 
-  if(searchLocation){
+  if(eventResult){
     parseLocation(eventResult);
   }
 
 };
 
-// The following functions are for automatically grabbing the user's location
-function success(pos) {
-  const crd = pos.coords;
+// Initially loads weather from searched city on homepage
+function loadWeather() {
+  searchLocation = localStorage.getItem('userLocation');
+  lon = localStorage.getItem('userLon');
+  lat = localStorage.getItem('userLat');
 
-  console.log('Your current position is:');
-  console.log(`Latitude : ${crd.latitude}`);
-  currentLat = crd.latitude;
-  console.log(currentLat);
-  console.log(`Longitude: ${crd.longitude}`);
-  currentLon = crd.longitude;
-  console.log(currentLon);
+  placeEL.text("Weather for " + searchLocation);
+  getWeather(lon, lat);
 }
 
-function error(err) {
-  console.warn(`ERROR(${err.code}): ${err.message}`);
+// Grabs weather ID from weather description to suggest clothing
+function getWeatherID(target) {
+  if (target.tagName == 'SPAN') {
+    target = target.parentElement.parentElement;
+  }
+  else {
+    target = target.parentElement;
+  }
+  return target.children[4].children[4].getAttribute('data-weatherID');
 }
 
+// Suggests appropriate clothing based on weather ID
+function suggestClothing(weatherID) {
+var suggestion = [];
+if (weatherID >= 200 && weatherID < 300) {
+  console.log("thunderstorm");
+  suggestion.push('jacket', 'sweater');
+}
+else if (weatherID >= 300 && weatherID < 400) {
+  console.log("drizzle");
+  suggestion.push('jacket');
+}
+else if (weatherID >= 500 && weatherID < 600) {
+  console.log("rain");
+  suggestion.push('jacket', 'sweater');
+}
+else if (weatherID >= 600 && weatherID < 700) {
+  console.log("snow");
+  suggestion.push('puffyjacket', 'gloves', 'boots')
+}
+else if (weatherID >= 800) {
+  console.log("clear sky");
+  suggestion.push('t-shirt', 'shorts');
+}
+else {
+  console.log("Invalid ID");
+}
+searchClothing(suggestion);
+}
 
-var getForecast = function (place) {
-    document.location.replace('./forecast.html?q=' + place);
+// API call that searches for clothing
+function searchClothing(suggestion) {
+const options = {
+    method: 'GET',
+    headers: {
+        'X-RapidAPI-Key': '465ec9dd4dmshe4c6638850c7838p148205jsn273e0cdeaa09',
+        'X-RapidAPI-Host': 'amazon-price1.p.rapidapi.com'
+    }
 };
-cityFormEl.addEventListener('submit', formSubmitHandler);
 
+for (var i = 0; i < suggestion.length; i++) {
+  fetch('https://amazon-price1.p.rapidapi.com/search?keywords=' + suggestion[i] + '&marketplace=US', options)
+      .then(response => response.json())
+      .then(response => {console.log(response); generateCards(response)})
+      .catch(err => console.error(err));
+}
+}
+
+// Generates the cards that are displayed in a modal for each clothing result
+function generateCards(result) {
+for (var i = 0; i < result.length; i++) {
+    var itemName = result[i].title;
+    var itemPrice = result[i].price;
+    var itemImg = result[i].imageUrl;
+    var itemURL = result[i].detailPageURL;
+
+
+    var clothingCard = $('<div>')
+        .addClass('card')
+        .css('width', '18rem');
+    
+    var clothingURL = $('<a>')
+        .attr('href', itemURL)
+        .attr('target', '_blank');
+    var clothingImg = $('<img>')
+        .addClass('card-img-top')
+        .attr('src', itemImg)
+        .attr('alt', 'Clothing Image');
+    clothingURL.append(clothingImg);
+
+    var clothingCardBody = $('<div>')
+        .addClass('card-body');
+    var clothingName = $('<h5>')
+        .addClass('card-title')
+        .text(itemName);
+    var clothingPrice = $('<p>')
+        .addClass('card-text')
+        .text(itemPrice);
+    clothingCardBody.append(clothingName);
+    clothingCardBody.append(clothingPrice);
+
+    clothingCard.append(clothingURL);
+    clothingCard.append(clothingCardBody);
+
+    clothingContainer.append(clothingCard);
+
+    clothingModal.show();
+}
+}
 
 $( document ).ready(() => {
   console.log("Webpage ready");
 
   userLocation.on("focus", displayModal);
+  cityFormEl.addEventListener('submit', formSubmitHandler);
 
+  weatherCards.on("click", (event) => {
+    var target = event.target;
+    var weatherID = getWeatherID(target);
+    console.log(weatherID);
+    suggestClothing(weatherID);
+  })
+
+  clothingModalEl.addEventListener('hidden.bs.modal', () => {
+    clothingContainer.html('');
+  })
+
+  loadWeather();
   generateMap();
-})
+});

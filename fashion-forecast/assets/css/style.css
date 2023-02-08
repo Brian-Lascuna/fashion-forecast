@@ -19,6 +19,7 @@
 }
 
 .card img {
+    height: 200px;
     background-size: cover;
 }
 
@@ -39,7 +40,15 @@ body {
     background-size: cover;
 }
 
+.weather-card {
+    user-select: none;
+}
+
 .weather-card:hover{
     transform: scale(1.1);
+}
+
+.weather-desc {
+    text-transform: capitalize;
 }
    
