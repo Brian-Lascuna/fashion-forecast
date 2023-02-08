@@ -12,8 +12,13 @@ var clothingContainer = $('#clothing-container');
 var placeEL = $('#place');
 var weatherCards = $('.weather-card');
 var weatherContainer = $('#weather-container');
-
-
+var searchHistory = JSON.parse(localStorage.getItem('searchHistory'));
+var historyButtons = $('.search-history-button');
+var sh0 = $('#sh0');
+var sh1 = $('#sh1');
+var sh2 = $('#sh2');
+var sh3 = $('#sh3');
+var sh4 = $('#sh4');
 // Options for getting user location
 const options = {
     enableHighAccuracy: true,
@@ -62,7 +67,7 @@ function generateMap() {
             console.log(event.result);
             eventResult = event.result;
             userLocation.val(event.result.place_name);
-            localStorage.setItem('lastFFSearch', JSON.stringify(eventResult));
+
         })
     });
 
@@ -78,9 +83,27 @@ function parseLocation(result) {
     placeEL.text("Weather for " + result.place_name);
     weatherContainer.attr('class', 'row');
     getWeather(lon, lat);
+    if(!searchHistory) searchHistory = [];
+    searchHistory.splice(0,0,result); // add search to beginning
+    for(var i=1; i<searchHistory.length; i++){
+      if (result.place_name == searchHistory[i].place_name) {searchHistory.splice(i,1); break;} //remove it from history, will be pushed to the front
+    }
+    
+    while (searchHistory.length>5){
+      searchHistory.pop();
+    }
+    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+    showHistory();
 }
 
-
+function showHistory(){
+  if(!searchHistory) searchHistory = [];
+  console.log(searchHistory);
+  for (var i=0; i<searchHistory.length; i++ ){
+    historyButtons[i].style.visibility = "visible";
+    historyButtons[i].textContent = searchHistory[i].place_name;
+  }
+}
 
 
 
@@ -132,6 +155,11 @@ function getWeather(lon, lat){
     });
 }
 
+function reloadHistory(){
+  console.log(this);
+  parseLocation(searchHistory[this.getAttribute('data-num')]);
+}
+
 var cityFormEl = document.querySelector('#city-search');
 var cityInputEl = document.querySelector('#search-location');
 
@@ -144,29 +172,16 @@ var formSubmitHandler = function (event) {
 
 };
 
-function getClothingSuggestions(){
-  console.log(this);
-  var weatherAttributes = { 
-      max: this.children[0].children[3].children[0].textContent,
-      min: this.children[0].children[3].children[2].textContent,
-      description: this.children[0].children[3].children[4].textContent,
-      date: this.children[0].children[1].textContent,
-      iconClass: this.children[0].children[2].class
-  };
-  console.log(weatherAttributes);
-  localStorage.setItem('weatherCard', JSON.stringify(weatherAttributes));
-  document.location.replace('./fashion.html');
-}
 
-
-cityFormEl.addEventListener('submit', formSubmitHandler);
-
-weatherCards.on('click', getClothingSuggestions);
 
 $( document ).ready(() => {
   console.log("Webpage ready");
-
+  showHistory();
+  
+  cityFormEl.addEventListener('submit', formSubmitHandler);
+  historyButtons.on("click", reloadHistory);
   userLocation.on("focus", displayModal);
 
   generateMap();
+  
 })
