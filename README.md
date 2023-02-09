@@ -20,7 +20,9 @@ In this project, you will be able to use the application to find the weather, us
 ## Visual 
 
 <!-- insert screenshot of working webpage here -->
-
+![Alt text](fashion.html.jpg)
+![Alt text](Fashion%20Forcast%20homepage.jpg)
+![Alt text](clothing%20api.jpg)
 
 ## Technologies
 
@@ -29,12 +31,13 @@ HTML, Tailwind.css, Javascript, MapBox API, Amazon Price API, OpenWeatherMap API
 
 ## Links
 
-[GitHub Repo](https://github.com/Brian-Lascuna/fashion-forecast)
+[GitHub Repo]
+https://github.com/Brian-Lascuna/fashion-forecast
 
 
-[Deployed Link]()
+[Deployed Link]
 <!-- insert link of deployed application -->
-
+https://brian-lascuna.github.io/fashion-forecast/
 
 ## Authors 
 
