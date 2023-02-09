@@ -20,9 +20,9 @@ In this project, you will be able to use the application to find the weather, us
 ## Visual 
 
 <!-- insert screenshot of working webpage here -->
-![Alt text](fashion.html.jpg)
-![Alt text](Fashion%20Forcast%20homepage.jpg)
-![Alt text](clothing%20api.jpg)
+![forcast](./assets/image/fashion.html.jpg)
+![homepage](./assets/image/Fashion%20Forcast%20homepage.jpg)
+![clothing](./assets/image/clothing%20api.jpg)
 
 ## Technologies
 
